@@ -11,10 +11,10 @@ export function* characterGenerator(allowedTypes, maxLevel) {
   // let computer = new Map();
 
   // if (/*уровень 1*/) {
+  let filteredAllowedTypes = allowedTypes.filter((item) => item.level <= maxLevel);
+  yield filteredAllowedTypes[Math.floor(Math.random() * filteredAllowedTypes.length)];
 
-  return allowedTypes[Math.random()];
-
-  }
+  
 }
 
 export function generateTeam(allowedTypes, maxLevel, characterCount) {
