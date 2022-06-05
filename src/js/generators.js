@@ -7,16 +7,13 @@
  */
 export function* characterGenerator(allowedTypes, maxLevel) {
   // TODO: write logic here
-  // let player = new Map();
-  // let computer = new Map();
-
-  // if (/*уровень 1*/) {
-  let filteredAllowedTypes = allowedTypes.filter((item) => item.level <= maxLevel);
+  const filteredAllowedTypes = allowedTypes.filter((item) => item.level <= maxLevel);
   yield filteredAllowedTypes[Math.floor(Math.random() * filteredAllowedTypes.length)];
-
-  
 }
 
 export function generateTeam(allowedTypes, maxLevel, characterCount) {
   // TODO: write logic here
+  // let player = new Map();
+  // let computer = new Map();
+  // if (/*уровень 1*/) {
 }
