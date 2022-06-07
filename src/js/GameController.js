@@ -1,4 +1,5 @@
 import themes from './themes';
+import cursors from './cursors';
 import GameState from './GameState';
 import GamePlay from './GamePlay';
 import { generateTeam } from './generators';
@@ -39,6 +40,7 @@ export default class GameController {
     // const character = this.gamePlay.cells[index].querySelector('.character')
     // boardEl.children[index].querySelector('.character')
     if (this.gamePlay.cells[index].querySelector('.character')/* есть персонаж на клетке */) {
+      this.gamePlay.setCursor(cursors.pointer);
       const levelIcon = String.fromCodePoint(0x1F396);
       const attackIcon = String.fromCodePoint(0x2694);
       const defenceIcon = String.fromCodePoint(0x1F6E1);
@@ -46,6 +48,8 @@ export default class GameController {
       const message = `${levelIcon}1 ${attackIcon}1 ${defenceIcon}1 ${healthIcon}1`;
       this.gamePlay.showCellTooltip(message, index);
     }
+
+    
   }
 
   onCellLeave(index) {
