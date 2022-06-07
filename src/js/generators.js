@@ -56,3 +56,23 @@ export function generateTeam(allowedTypes, maxLevel, characterCount) {
   }
   return { player, computer };
 }
+
+// function generatePositionsLeft(characterCount) {
+//   const positions = new Set();
+//   for (let i = 0; i < 8 ** 2; i += 1) {
+//     if (i === 0 || i === 1 || i % 8 === 0 || i % 8 === 1) {
+//       positions.add(i);
+//     }
+//   }
+
+// }
+
+// function generatePositionsRight(characterCount) {
+//   const positions = new Set();
+//   for (let i = 0; i < 8 ** 2; i += 1) {
+//     if (i === 8 - 2 || i === 8 - 1 || (i + 2) % 8 === 0 || (i + 1) % 8 === 0) {
+//       positions.add(i);
+//     }
+//   }
+
+// }
