@@ -1,6 +1,5 @@
 import themes from './themes';
-import PositionedCharacter from './PositionedCharacter';
-// import {generateTeam, characterGenerator} from './generators';
+import { generateTeam } from './generators';
 
 export default class GameController {
   constructor(gamePlay, stateService) {
@@ -12,8 +11,7 @@ export default class GameController {
     // TODO: add event listeners to gamePlay events
     // TODO: load saved stated from stateService
     this.gamePlay.drawUi(themes.prairie);
-
-    const positions = [new PositionedCharacter(), new PositionedCharacter()];
+    // let positions = generateTeam(allowedTypes, maxLevel, characterCount);
     this.gamePlay.redrawPositions(positions);
   }
 
