@@ -2,9 +2,14 @@ import themes from './themes';
 import cursors from './cursors';
 import GameState from './GameState';
 import GamePlay from './GamePlay';
-import { generateTeam } from './generators';
+import { generateTeam, genPosLeft, genPosRight } from './generators';
 import PositionedCharacter from './PositionedCharacter';
 import Bowman from './characters/Bowman';
+import Daemon from './characters/Daemon';
+import Magician from './characters/Magician';
+import Swordsman from './characters/Swordsman';
+import Undead from './characters/Undead';
+import Vampire from './characters/Vampire';
 
 export default class GameController {
   constructor(gamePlay, stateService) {
@@ -17,9 +22,21 @@ export default class GameController {
     // TODO: add event listeners to gamePlay events
     // TODO: load saved stated from stateService
     this.gamePlay.drawUi(themes.prairie);
-    // let positions = generateTeam(allowedTypes, maxLevel, characterCount);
-    // this.gamePlay.redrawPositions(positions);
-    this.gamePlay.redrawPositions([new PositionedCharacter(new Bowman(1), 0)]);
+    const positions = [];
+    const allowedTypes = [Bowman, Daemon, Magician, Swordsman, Undead, Vampire];
+    const maxLevel = 1;
+    const characterCount = 2;
+    const characters = generateTeam(allowedTypes, maxLevel, characterCount);
+    const posLeft = genPosLeft(characterCount);
+    const posRight = genPosRight(characterCount);
+    characters.player.forEach((item) => {
+      positions.push(new PositionedCharacter(item, posLeft.next().value));
+      console.log(positions);
+    });
+    characters.computer.forEach((item) => {
+      positions.push(new PositionedCharacter(item, posRight.next().value));
+    });
+    this.gamePlay.redrawPositions(positions);
 
     this.gamePlay.addCellEnterListener(this.onCellEnter);
     this.gamePlay.addCellLeaveListener(this.onCellLeave);
@@ -48,8 +65,6 @@ export default class GameController {
       const message = `${levelIcon}1 ${attackIcon}1 ${defenceIcon}1 ${healthIcon}1`;
       this.gamePlay.showCellTooltip(message, index);
     }
-
-    
   }
 
   onCellLeave(index) {

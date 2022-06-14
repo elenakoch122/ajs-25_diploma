@@ -57,22 +57,39 @@ export function generateTeam(allowedTypes, maxLevel, characterCount) {
   return { player, computer };
 }
 
-// function generatePositionsLeft(characterCount) {
-//   const positions = new Set();
-//   for (let i = 0; i < 8 ** 2; i += 1) {
-//     if (i === 0 || i === 1 || i % 8 === 0 || i % 8 === 1) {
-//       positions.add(i);
-//     }
-//   }
+export function* genPosLeft(characterCount) {
+  const left = [];
+  const positions = new Set();
+  for (let i = 0; i < 8 ** 2; i += 1) {
+    if (i === 0 || i === 1 || i % 8 === 0 || i % 8 === 1) {
+      left.push(i);
+    }
+  }
+  while (positions.size < characterCount) {
+    positions.add(left[Math.floor(Math.random() * left.length)]);
+  }
+  console.log('left - ', positions);
+  for (const pos of positions) {
+    yield pos;
+  }
+  // positions.forEach((item) => yield item);
+  // return positions;
+}
 
-// }
-
-// function generatePositionsRight(characterCount) {
-//   const positions = new Set();
-//   for (let i = 0; i < 8 ** 2; i += 1) {
-//     if (i === 8 - 2 || i === 8 - 1 || (i + 2) % 8 === 0 || (i + 1) % 8 === 0) {
-//       positions.add(i);
-//     }
-//   }
-
-// }
+export function* genPosRight(characterCount) {
+  const right = [];
+  const positions = new Set();
+  for (let i = 0; i < 8 ** 2; i += 1) {
+    if (i === 8 - 2 || i === 8 - 1 || (i + 2) % 8 === 0 || (i + 1) % 8 === 0) {
+      right.push(i);
+    }
+  }
+  while (positions.size < characterCount) {
+    positions.add(right[Math.floor(Math.random() * right.length)]);
+  }
+  console.log('right - ', positions);
+  for (const pos of positions) {
+    yield pos;
+  }
+  // return positions;
+}
