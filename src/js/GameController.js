@@ -45,8 +45,13 @@ export default class GameController {
 
   onCellClick(index) {
     // TODO: react to click
-    if (this.gamePlay.cells[index].querySelector('.character')/* есть персонаж на клетке, и он играбельный */) {
-      this.gamePlay.selectCell(index, color = 'yellow');
+    if (this.gamePlay.cells[index].querySelector('.character')/* && персонаж играбельный */) {
+      this.gamePlay.cells.forEach((item, idx) => {
+        if (item.classList.contains('selected')) {
+          this.gamePlay.deselectCell(idx);
+        }
+      });
+      this.gamePlay.selectCell(index);
     } else {
       GamePlay.showError('В клетке нет игрока!');
     }
@@ -54,8 +59,6 @@ export default class GameController {
 
   onCellEnter(index) {
     // TODO: react to mouse enter
-    // const character = this.gamePlay.cells[index].querySelector('.character')
-    // boardEl.children[index].querySelector('.character')
     if (this.gamePlay.cells[index].querySelector('.character')/* есть персонаж на клетке */) {
       this.gamePlay.setCursor(cursors.pointer);
       const character = this.positions.find((item) => item.position === index);
