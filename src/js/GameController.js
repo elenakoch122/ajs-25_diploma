@@ -16,13 +16,14 @@ export default class GameController {
     this.gamePlay = gamePlay;
     this.stateService = stateService;
     this.gameState = new GameState();
+    this.positions = [];
   }
 
   init() {
     // TODO: add event listeners to gamePlay events
     // TODO: load saved stated from stateService
     this.gamePlay.drawUi(themes.prairie);
-    const positions = [];
+    // const positions = [];
     const allowedTypes = [Bowman, Daemon, Magician, Swordsman, Undead, Vampire];
     const maxLevel = 1;
     const characterCount = 2;
@@ -30,17 +31,16 @@ export default class GameController {
     const posLeft = genPosLeft(characterCount);
     const posRight = genPosRight(characterCount);
     characters.player.forEach((item) => {
-      positions.push(new PositionedCharacter(item, posLeft.next().value));
-      console.log(positions);
+      this.positions.push(new PositionedCharacter(item, posLeft.next().value));
     });
     characters.computer.forEach((item) => {
-      positions.push(new PositionedCharacter(item, posRight.next().value));
+      this.positions.push(new PositionedCharacter(item, posRight.next().value));
     });
-    this.gamePlay.redrawPositions(positions);
+    this.gamePlay.redrawPositions(this.positions);
 
-    this.gamePlay.addCellEnterListener(this.onCellEnter);
-    this.gamePlay.addCellLeaveListener(this.onCellLeave);
-    this.gamePlay.addCellClickListener(this.onCellClick);
+    this.gamePlay.addCellEnterListener(this.onCellEnter.bind(this));
+    this.gamePlay.addCellLeaveListener(this.onCellLeave.bind(this));
+    this.gamePlay.addCellClickListener(this.onCellClick.bind(this));
   }
 
   onCellClick(index) {
@@ -58,11 +58,12 @@ export default class GameController {
     // boardEl.children[index].querySelector('.character')
     if (this.gamePlay.cells[index].querySelector('.character')/* есть персонаж на клетке */) {
       this.gamePlay.setCursor(cursors.pointer);
-      const levelIcon = String.fromCodePoint(0x1F396);
-      const attackIcon = String.fromCodePoint(0x2694);
-      const defenceIcon = String.fromCodePoint(0x1F6E1);
-      const healthIcon = String.fromCodePoint(0x2764);
-      const message = `${levelIcon}1 ${attackIcon}1 ${defenceIcon}1 ${healthIcon}1`;
+      const character = this.positions.find((item) => item.position === index);
+      const levelInfo = String.fromCodePoint(0x1F396) + character.character.level;
+      const attackInfo = String.fromCodePoint(0x2694) + character.character.attack;
+      const defenceInfo = String.fromCodePoint(0x1F6E1) + character.character.defence;
+      const healthInfo = String.fromCodePoint(0x2764) + character.character.health;
+      const message = `${levelInfo} ${attackInfo} ${defenceInfo} ${healthInfo}`;
       this.gamePlay.showCellTooltip(message, index);
     }
   }
