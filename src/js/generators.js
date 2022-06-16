@@ -68,12 +68,9 @@ export function* genPosLeft(characterCount) {
   while (positions.size < characterCount) {
     positions.add(left[Math.floor(Math.random() * left.length)]);
   }
-  console.log('left - ', positions);
   for (const pos of positions) {
     yield pos;
   }
-  // positions.forEach((item) => yield item);
-  // return positions;
 }
 
 export function* genPosRight(characterCount) {
@@ -87,9 +84,7 @@ export function* genPosRight(characterCount) {
   while (positions.size < characterCount) {
     positions.add(right[Math.floor(Math.random() * right.length)]);
   }
-  console.log('right - ', positions);
   for (const pos of positions) {
     yield pos;
   }
-  // return positions;
 }
